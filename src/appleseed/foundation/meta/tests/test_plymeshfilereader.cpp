@@ -65,7 +65,7 @@ TEST_SUITE(Foundation_Mesh_PLYMeshFileReader)
 
         void set_face_vertices(const size_t vertices[]) override
         {
-            assert(!meshes.empty());
+            assert(!m_meshes.empty());
             assert(!m_meshes.back().m_faces.empty());
             Face& face = m_meshes.back().m_faces.back();
             for (size_t i = 0; i < face.m_vertices.size(); ++i)
@@ -87,15 +87,12 @@ TEST_SUITE(Foundation_Mesh_PLYMeshFileReader)
 
     TEST_CASE(ReadCubeMeshFile)
     {
-        std::cout << "TEST PLY!" << std::endl;
-
-        const std::string igd_ply = "/home/petra/Documents/Projects/SimVision/2025-21-04 Example ply with additional data/Endmill_48_everything.ply";
         const std::string test_ply = "unit tests/inputs/test_plymeshfilereader_ascii_cube_groups.ply";
         PLYMeshFileReader reader(test_ply);
         MeshBuilder builder;
         reader.read(builder);
 
-        assert(builder.m_meshes.size() == 1);
+        assert(builder.m_meshes.size() == 3); // test_plymeshfilereader_ascii_cube_groups.ply has 3 groups
         
         FILE* f = fopen("output.txt", "wt");
         assert(f);
